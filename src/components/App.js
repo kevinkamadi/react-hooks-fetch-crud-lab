@@ -5,15 +5,15 @@ import QuestionList from "./QuestionList";
 
 function App() {
   const [page, setPage] = useState("List");
-  const [questions, setQuestions] = useState([]);
+  const [questions, setQuestions] = useState([]) //set questions 
 
-    useEffect(() => {
-         fetch("http://localhost:3000/questions")
-         .then((r) => r.json())
-        .then((questions) => setQuestions(questions));
-          }, [])
-    
-    function handleAddQuestion(formData) {
+  useEffect(() => {
+    fetch('http://localhost:4000/questions')
+    .then(response => response.json())
+    .then((question) => setQuestions(question) )
+  },[])
+
+  function handleAddQuestion(formData) {
     fetch('http://localhost:4000/questions', {
       method: 'POST',
       headers: {
@@ -66,13 +66,12 @@ function App() {
       setQuestions(updatedQuestions);
     });
   }
-
+  
 
   return (
     <main>
       <AdminNavBar onChangePage={setPage} />
-      {page === "Form" ? <QuestionForm /> : <QuestionList />}
-       {page === "Form" 
+      {page === "Form" 
       ? <QuestionForm 
       onAddQuestion={handleAddQuestion} 
 
@@ -88,5 +87,3 @@ function App() {
 }
 
 export default App;
-
-
